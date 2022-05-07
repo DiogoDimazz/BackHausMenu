@@ -2,6 +2,7 @@ create database hausmenu
 
 create table usuarios (
   id serial primary key,
+  nome text,
   email text unique not null,
   senha text not null,
   genero text,
