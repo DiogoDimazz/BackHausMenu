@@ -30,7 +30,7 @@ const signupUser = async (req, res) => {
         return res.status(200).json("User registered! Let's cook!")
 
     } catch (error) {
-        return res.status(400).jaon(error.message)
+        return res.status(400).json(error.message)
     }
 }
 
