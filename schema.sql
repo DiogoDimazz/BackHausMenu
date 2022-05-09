@@ -6,7 +6,8 @@ create table usuarios (
   email text unique not null,
   senha text not null,
   genero text,
-  dieta text
+  dieta text,
+  imagem text
   )
 
 create table cardapio (
@@ -27,7 +28,8 @@ create table livro_de_receitas (
   custo_medio integer,
   modo_de_preparo text,
   avaliacao integer,
-  observacao text
+  observacao text,
+  imagem text
 )
 
 create table receitas_do_cardapio (
@@ -38,6 +40,7 @@ create table receitas_do_cardapio (
   status boolean,
   cardapio_id integer,
   receita_id integer,
+  imagem text,
   foreign key(cardapio_id) references cardapio(id),
   foreign key(receita_id) references livro_de_receitas(id)
 )
