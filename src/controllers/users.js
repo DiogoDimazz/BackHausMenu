@@ -1,5 +1,6 @@
 const knex = require('../connection')
 const bcrypt = require('bcrypt')
+const transporter = require('../nodemailer')
 
 const signupUser = async (req, res) => {
     const { email, password, confirmPassword } = req.body
@@ -26,6 +27,16 @@ const signupUser = async (req, res) => {
         })
 
         if (!user) { return res.status(400).json("Sorry! The user couldn't be registered") }
+
+        transporter.sendMail({
+            from: 'Hausmenu <nao-responda@hausmenu.com.br>',
+            to: email,
+            subject: 'Bem vindo ao Hausmenu',
+            template: 'signup',
+            context: {
+                email
+            }
+        })
 
         return res.status(200).json("User registered! Let's cook!")
 

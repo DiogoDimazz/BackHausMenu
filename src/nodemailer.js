@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer')
+const handlebars = require('nodemailer-express-handlebars')
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.mailtrap.io',
@@ -8,5 +9,13 @@ const transporter = nodemailer.createTransport({
         pass: '8b2cc3affb8252'
     }
 })
+
+transporter.use('compile', handlebars({
+    viewEngine: {
+        extname: '.handlebars',
+        defaultLayout: false
+    },
+    viewPath: './views/'
+}))
 
 module.exports = transporter
