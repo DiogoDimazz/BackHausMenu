@@ -2,6 +2,7 @@ const knex = require('../connection')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const hashCode = require('../hashCode')
+const transporter = require('../nodemailer')
 
 const login = async (req, res) => {
     const { email, password } = req.body
@@ -27,10 +28,19 @@ const login = async (req, res) => {
 
         const { senha: _, ...userData } = user
 
-        return res.status(200).json({
+        res.status(200).json({
             user: userData,
             token
         })
+
+        let sendData = transporter.sendMail({
+            from: 'Hausmenu <nao-responder@hausmenu.com.br>', // sender address
+            to: email,
+            subject: "Let's Cook!", // Subject line
+            text: "Login realizado"
+        });
+
+        return
 
     } catch (error) {
         res.status(400).json(error.message)
