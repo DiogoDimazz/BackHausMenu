@@ -1,11 +1,11 @@
 const knex = require('knex')({
     client: 'pg',
     connection: {
-        host: 'app-540972b3-5f81-4af2-b837-e647e01da5d3-do-user-11521879-0.b.db.ondigitalocean.com',
-        user: 'db-hausmenu',
-        password: 'AVNS_09HVtjpzpowyYit',
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
         port: 25060,
-        database: 'db-hausmenu',
+        database: process.env.DB_DATABASE,
         ssl: {
             rejectUnauthorized: false
         }
