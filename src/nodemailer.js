@@ -2,11 +2,11 @@ const nodemailer = require('nodemailer')
 const handlebars = require('nodemailer-express-handlebars')
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.mailtrap.io',
-    port: 2525,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     auth: {
-        user: 'e4cc708276111a',
-        pass: '8b2cc3affb8252'
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
     }
 })
 

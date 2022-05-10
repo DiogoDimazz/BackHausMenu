@@ -1,7 +1,6 @@
 const knex = require('../connection')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const hashCode = require('../hashCode')
 
 const login = async (req, res) => {
     const { email, password } = req.body
@@ -23,7 +22,7 @@ const login = async (req, res) => {
             id: user.id,
             name: user.nome,
             email: user.email
-        }, hashCode, { expiresIn: '24h' })
+        }, process.env.HASHCODE, { expiresIn: '24h' })
 
         const { senha: _, ...userData } = user
 
