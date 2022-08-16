@@ -9,6 +9,5 @@ app.use(express.json({ limit: '5mb' }));
 app.use(cors());
 app.use(routes);
 
-console.log(process.env);
 
 app.listen(3000);
