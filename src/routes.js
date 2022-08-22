@@ -8,7 +8,7 @@ const routes = express();
 
 routes.post('/signup', users.signupUser)
 
-routes.post('/login', login.login)
+routes.post('/login', login)
 
 // routes.post('/upload', images.uploadImage)
 
