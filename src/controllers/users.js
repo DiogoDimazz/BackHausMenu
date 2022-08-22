@@ -5,6 +5,8 @@ const signupUserSchema = require('../validations/signupUserSchema')
 const signupUser = async (req, res) => {
     const { email, password, confirmPassword } = req.body
 
+    console.log('linha 8');
+
     try {
         const bodyFormatted = {
             email: email.trim(),
