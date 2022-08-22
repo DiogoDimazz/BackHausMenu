@@ -1,43 +1,47 @@
-const knex = require('../connection')
-const bcrypt = require('bcrypt')
+const knex = require('../connection');
+const bcrypt = require('bcrypt');
+const loginSchema = require('../validations/loginSchema')
 const jwt = require('jsonwebtoken')
 
 const login = async (req, res) => {
-    const { email, password } = req.body
+    const { email, password } = req.body;
 
-    if (!email && !password) { return res.status(400).json('Input your email and password to login') }
-    if (!email) { return res.status(400).json('Input your email to login') }
-    if (!password) { return res.status(400).json('Input your password to login') }
+    console.log('teste 9');
 
     try {
-        const user = await knex('usuarios').where({ email }).first();
+        const bodyFormatted = {
+            email: email.trim(),
+            password: password.trim()
+        }
 
-        if (!user) { return res.status(400).json("Email not found!") }
+        console.log('teste 17');
 
-        const rightPassword = await bcrypt.compare(password, user.senha);
+        await loginSchema.validate(bodyFormatted)
 
-        if (!rightPassword) { return res.status(400).json("Email and password doesn't match") }
+        console.log('teste 21');
 
-        const token = jwt.sign({
-            id: user.id,
-            name: user.nome,
-            email: user.email
-        }, process.env.HASHCODE, { expiresIn: '24h' })
+        const userFound = await knex('usuarios').where({ email }).first();
+        if (!userFound) { return res.status(404).json("Invalid email or password!") }
 
-        const { senha: _, ...userData } = user
+        const passwordCompare = await bcrypt.compare(password, userFound.senha)
+        if (!passwordCompare) { return res.status(400).json('Invalid email or password') }
 
-        res.status(200).json({
-            user: userData,
+        console.log('teste 29');
+
+        const token = jwt.sign({ id: userFound.id }, process.env.HASHCODE, { expiresIn: '12h' })
+
+        console.log('teste 33');
+
+        return res.status(200).json({
+            id: userFound.id,
+            user: userFound.nome ? userFound.nome : userFound.email,
             token
         })
 
-        return
-
     } catch (error) {
-        res.status(400).json(error.message)
+        console.log('teste 42');
+        return res.status(400).json(error.message)
     }
 }
 
-module.exports = {
-    login
-}
+module.exports = login
