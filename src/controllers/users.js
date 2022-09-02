@@ -15,11 +15,11 @@ const signupUser = async (req, res) => {
 
         await signupUserSchema.validate(bodyFormatted)
 
-        if (password !== confirmPassword) { return res.status(400).json("The password doesn't match!") }
+        if (password !== confirmPassword) { return res.status(400).json("As senhas não correspondem!") }
 
         const uniqueEmail = await knex('usuarios').where({ email }).first()
 
-        if (uniqueEmail) { return res.status(400).json('The email already exists!') }
+        if (uniqueEmail) { return res.status(400).json('O email informado já existe!') }
 
         const criptoPassword = await bcrypt.hash(password, 10)
 
@@ -28,10 +28,10 @@ const signupUser = async (req, res) => {
             senha: criptoPassword
         })
 
-        if (!user) { return res.status(400).json("Sorry! The user couldn't be registered") }
+        if (!user) { return res.status(400).json("Desculpe! O usuário não pôde ser registardo.") }
 
 
-        return res.status(200).json("User registered! Let's cook!")
+        return res.status(200).json("Usuário registrado! Vamos cozinhar!")
     } catch (error) {
         return res.status(400).json(error.message)
     }
