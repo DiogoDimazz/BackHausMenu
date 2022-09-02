@@ -1,9 +1,9 @@
-const knex = require('../connection')
-const bcrypt = require('bcrypt')
-const signupUserSchema = require('../validations/signupUserSchema')
+const knex = require('../connection');
+const bcrypt = require('bcrypt');
+const signupUserSchema = require('../validations/signupUserSchema');
 
 const signupUser = async (req, res) => {
-    const { email, password, confirmPassword } = req.body
+    const { email, password, confirmPassword } = req.body;
 
 
     try {
@@ -11,29 +11,28 @@ const signupUser = async (req, res) => {
             email: email.trim(),
             password: password.trim(),
             confirmPassword: confirmPassword.trim()
-        }
+        };
 
-        await signupUserSchema.validate(bodyFormatted)
+        await signupUserSchema.validate(bodyFormatted);
 
-        if (password !== confirmPassword) { return res.status(400).json("As senhas não correspondem!") }
+        if (password !== confirmPassword) { return res.status(400).json("As senhas não correspondem!") };
 
-        const uniqueEmail = await knex('usuarios').where({ email }).first()
+        const uniqueEmail = await knex('usuarios').where({ email }).first();
 
-        if (uniqueEmail) { return res.status(400).json('O email informado já existe!') }
+        if (uniqueEmail) { return res.status(400).json('O email informado já existe!') };
 
-        const criptoPassword = await bcrypt.hash(password, 10)
+        const criptoPassword = await bcrypt.hash(password, 10);
 
         const user = await knex('usuarios').insert({
             email,
             senha: criptoPassword
-        })
+        });
 
-        if (!user) { return res.status(400).json("Desculpe! O usuário não pôde ser registardo.") }
+        if (!user) { return res.status(400).json("Desculpe! O usuário não pôde ser registardo.") };
 
-
-        return res.status(200).json("Usuário registrado! Vamos cozinhar!")
+        return res.status(200).json("Usuário registrado! Vamos cozinhar!");
     } catch (error) {
-        return res.status(400).json(error.message)
+        return res.status(400).json(error.message);
     }
 }
 
