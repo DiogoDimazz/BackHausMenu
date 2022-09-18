@@ -1,14 +1,17 @@
 const express = require('express')
 const users = require('./controllers/users')
 const login = require('./controllers/login')
+const marketList = require('./controllers/marketList');
 // const loginCheck = require('./filters/loginCheck')
 // const images = require('./controllers/images')
 
 const routes = express();
 
-routes.post('/signup', users.signupUser)
+routes.get('/lista', marketList.getProducts);
 
-routes.post('/login', login)
+routes.post('/signup', users.signupUser);
+
+routes.post('/login', login);
 
 // routes.post('/upload', images.uploadImage)
 
