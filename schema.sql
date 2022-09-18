@@ -88,4 +88,31 @@ create table ingredientes_da_receita (
   foreign key(despensa_id) references despensa(id)
 )
 
+create table secoes(
+  id serial primary key,
+  nome text not null
+  )
+  
+insert into secoes(nome) values ('bebidas');
+insert into secoes(nome) values ('cereais e farináceos');
+insert into secoes(nome) values ('enlatados');
+insert into secoes(nome) values ('frios');
+insert into secoes(nome) values ('laticínios');
+insert into secoes(nome) values ('material de limpeza');
+insert into secoes(nome) values ('higiene pessoal');
+insert into secoes(nome) values ('peixaria');
+insert into secoes(nome) values ('portifruti');
+insert into secoes(nome) values ('padaria');
+insert into secoes(nome) values ('mercearia');
+insert into secoes(nome) values ('outros');
 
+
+
+create table produtos(
+  id serial primary key,
+  nome text not null,
+  categoria text not null,
+  descricao text,
+  secao_id integer,
+  foreign key(secao_id) references secoes(id)
+)
