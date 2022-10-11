@@ -13,9 +13,9 @@ const getProducts = async (req, res) => {
         return res.status(200).json(product);
     } catch (error) {
         return res.status(400).json(error.message);
-    }
-}
+    };
+};
 
 module.exports = {
     getProducts
-}
+};
