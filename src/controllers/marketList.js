@@ -4,7 +4,7 @@ const getProducts = async (req, res) => {
     const { nome } = req.body;
 
     try {
-        const product = await knex('produtos').where({ nome }).first();
+        const product = await knex('produtos').whereILike('nome', nome);
 
         if (!product) {
             return res.status(404).json("Produto não encontrado");
