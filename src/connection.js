@@ -9,7 +9,7 @@ const knex = require('knex')({
             rejectUnauthorized: false
         }
     }
-})
+});
 
 // const knex = require('knex')({
 //     client: 'pg',
